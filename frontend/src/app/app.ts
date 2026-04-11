@@ -17,7 +17,7 @@ export class App {
     this.ladeHallo();
   }
 
-  public ladeHallo():void{
+  public ladeHallo():void {
       this.service.getHallo().subscribe((data:string) => {
         this.halloAusgabe.set(data);
         console.log(data);
