@@ -1,4 +1,4 @@
-package de.stefan.backend;
+package de.stefan.backend.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
