@@ -22,21 +22,20 @@ import de.stefan.backend.repository.TaskRepository;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class TaskController {
-    
-    private final TaskRepository taskRepository;
 
+    private final TaskRepository taskRepository;
 
     public TaskController(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     @GetMapping("/api/tasks")
-    public List<Task> getTasks(){
+    public List<Task> getTasks() {
         return taskRepository.findAll();
     }
 
     @GetMapping("/api/tasks/{id}")
-    public Task getTask(@PathVariable Long id){
+    public Task getTask(@PathVariable Long id) {
         return taskRepository.findById(id).orElse(null); // TODO: später auf ResponseEntity mit 404 umstellen
     }
 
@@ -50,7 +49,7 @@ public class TaskController {
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task changedTask) {
         Task task = taskRepository.findById(id).orElse(null);
 
-        if(task != null) {
+        if (task != null) {
             task.setTitle(changedTask.getTitle());
             task.setStatus(changedTask.getStatus());
 
@@ -64,7 +63,7 @@ public class TaskController {
 
     @DeleteMapping("/api/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        if(taskRepository.findById(id).isPresent()) {
+        if (taskRepository.findById(id).isPresent()) {
             taskRepository.deleteById(id);
 
             return ResponseEntity.status(204).build();

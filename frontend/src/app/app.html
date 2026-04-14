@@ -1,22 +1,41 @@
 <h1>Task Tracker</h1>
 
-<ul>
-    <li *ngFor = "let task of tasks">
-        {{ task.title }} - {{ task.status }}
-    </li>
-</ul>
-
 <p>Antwort vom Backend:</p>
 <p>{{ halloAusgabe() }}</p>
 
 <h2>Neuen Task erstellen</h2>
 
-<imput [(ngModel)]="newTitle" placeholder="Titel eingeben">
+<input [(ngModel)]="newTitle" placeholder="Titel eingeben">
 
 <select [(ngModel)]="newStatus">
-  <option value="NICHT_ANGEFANGEN">Nicht angefangen</option>
-  <option value="IN_ARBEIT">In Arbeit</option>
-  <option value="FERTIG">Fertig</option>
+    <option value="NICHT_ANGEFANGEN">Nicht angefangen</option>
+    <option value="IN_ARBEIT">In Arbeit</option>
+    <option value="FERTIG">Fertig</option>
 </select>
 
-<button (click)="addTask()">Task erstellen</button>
+<button type="button" (click)="addTask()">Task erstellen</button>
+
+<h2>Einen Task anzeigen</h2>
+
+<input type="number" [(ngModel)]="taskId" name="ID vom Task" placeholder="ID" required value="">
+
+<button type="button" (click)="ladeTask(taskId)">Task laden</button>
+
+<p *ngIf="taskAusgabe()">
+    {{ taskAusgabe()?.title }} - {{ taskAusgabe()?.status }}
+</p>
+
+<h2>alle Tasks</h2>
+
+<button type="button" (click)="ladeAlleTask()">Alle Task laden</button>
+
+<ul>
+    <li *ngFor="let task of tasks()">
+        {{ task.title }} - {{ task.status }}
+    </li>
+</ul>
+
+<h2>Tasks löschen</h2>
+
+<input type="number" [(ngModel)]="deleteTaskId" name="ID vom Task" placeholder="ID" required value="">
+<button type="button" (click)="deleteTask(deleteTaskId)">Task löschen</button>
