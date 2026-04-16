@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { Task } from "./task";
 import { OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DeleteDialog } from './delete-dialog'
+
 
 @Component({
   selector: 'app-root',
@@ -22,7 +25,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
-    MatIconModule],
+    MatIconModule,
+    MatDialogModule,
+    DeleteDialog],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -37,7 +42,7 @@ export class App implements OnInit {
 
   taskAusgabe = signal<Task | null>(null);
 
-  constructor(private service: TaskService) { }
+  constructor(private service: TaskService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.ladeAlleTask();
@@ -51,7 +56,7 @@ export class App implements OnInit {
   }
 
   public ladeTask(id: number | null): void {
-    if(id === null) return;
+    if (id === null) return;
 
     this.service.getTask(id).subscribe((data: Task) => {
       this.taskAusgabe.set(data);
@@ -78,12 +83,22 @@ export class App implements OnInit {
     });
   }
 
-  public deleteTask(id: number | null): void {
-    if(id === null) return;
-    this.service.deleteTask(id).subscribe(() => {
-      console.log("Task gelöscht");
-      this.ladeAlleTask();
-      this.deleteTaskId = null;
+  public deleteTask(task: Task | null): void {
+    if (task === null) return;
+
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      data: task,
+      width: '600px',
+      maxWidth: '90vw',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.service.deleteTask(task.id).subscribe(() => {
+          console.log("Task gelöscht");
+          this.ladeAlleTask();
+        });
+      }
     });
   }
 }

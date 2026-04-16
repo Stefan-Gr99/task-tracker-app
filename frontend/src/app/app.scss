@@ -5,28 +5,23 @@ mat-card {
     text-align: center;
 }
 
-.row {
-    display: flex;
-}
-
-.row mat-card {
-    flex: 1;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .title {
-  text-align: center;
-  font-size: 55px;
-  background-color: #192546;
-  color: white;
-  padding: 30px;
-  margin: 0;
-  width: 100%;
+    text-align: center;
+    font-size: 55px;
+    background-color: #192546;
+    color: white;
+    padding: 30px;
+    margin: 0;
+    width: 100%;
 }
 
 h2 {
     text-align: left;
+}
+
+ul {
+    margin-top: 10;
+    padding: 0;
 }
 
 li {
@@ -36,62 +31,65 @@ li {
 }
 
 li button {
-    color: #ce1e1e;
     margin-left: 15px;
 }
 
+button.delete {
+  color: rgb(202, 51, 51);
+}
+
 .task-left {
-  display: flex;
+    display: flex;
 }
 
 .task-id {
-  display: inline-block;
-  font-weight: bold;
-  color: #666;
-  width: 40px;
+    display: inline-block;
+    font-weight: bold;
+    color: #666;
+    width: 40px;
 }
 
 .task-title {
-  font-weight: 500;
-  width: 500px;
+    font-weight: 500;
+    width: 500px;
 }
 
 .task-item {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  padding: 10px 15px;
-  margin-bottom: 8px;
+    padding: 10px 15px;
+    margin-bottom: 8px;
 
-  background-color: #f9f9f9;
-  border-radius: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
 }
 
 .task-item:hover {
-  background-color: #ececec;
-  transform: scale(1.01);
+    background-color: #ececec;
+    transform: scale(1.01);
 }
 
 .task-status {
-  padding: 4px 10px;
-  border-radius: 12px;
-  background-color: #ddd;
-  font-size: 12px;
-  margin-left: 10px;
-  width: 100px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background-color: #ddd;
+    font-size: 12px;
+    margin-left: 10px;
+    width: 100px;
 }
 
 .status-IN_ARBEIT {
-  background-color: orange;
-  color: white;
+    background-color: orange;
+    color: white;
 }
 
 .status-FERTIG {
-  background-color: green;
-  color: white;
+    background-color: green;
+    color: white;
 }
 
 .status-NICHT_ANGEFANGEN {
-  background-color: gray;
-  color: white;
+    background-color: gray;
+    color: white;
 }
