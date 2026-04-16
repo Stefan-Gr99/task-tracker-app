@@ -1,4 +1,9 @@
-import { Component, Signal, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterOutlet } from '@angular/router';
 import { TaskService } from './task.service';
 import { CommonModule } from '@angular/common';
@@ -8,7 +13,14 @@ import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule],
+  imports: [RouterOutlet,
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule,
+    MatFormFieldModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -16,12 +28,11 @@ export class App implements OnInit {
   protected readonly title = signal('frontend');
 
   tasks = signal<Task[]>([]);
-  deleteTaskId: number = 0;
-  taskId: number = 0;
+  taskId: number | null = null;
+  deleteTaskId: number | null = null;
   newTitle: string = "";
   newStatus: string = "NICHT_ANGEFANGEN";
 
-  halloAusgabe = signal("TEST");
   taskAusgabe = signal<Task | null>(null);
 
   constructor(private service: TaskService) { }
@@ -33,12 +44,13 @@ export class App implements OnInit {
 
   public ladeHallo(): void {
     this.service.getHallo().subscribe((data: string) => {
-      this.halloAusgabe.set(data);
       console.log(data);
     });
   }
 
-  public ladeTask(id: number): void {
+  public ladeTask(id: number | null): void {
+    if(id === null) return;
+
     this.service.getTask(id).subscribe((data: Task) => {
       this.taskAusgabe.set(data);
     });
@@ -63,7 +75,8 @@ export class App implements OnInit {
     });
   }
 
-  public deleteTask(id: number): void {
+  public deleteTask(id: number | null): void {
+    if(id === null) return;
     this.service.deleteTask(id).subscribe(() => {
       console.log("Task gelöscht");
       this.ladeAlleTask();
