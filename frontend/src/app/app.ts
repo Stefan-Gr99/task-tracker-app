@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task } from "./task";
 import { OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import { OnInit } from '@angular/core';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    MatFormFieldModule],
+    MatFormFieldModule,
+    MatIconModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -53,6 +55,7 @@ export class App implements OnInit {
 
     this.service.getTask(id).subscribe((data: Task) => {
       this.taskAusgabe.set(data);
+      this.taskId = null;
     });
   }
 
@@ -80,6 +83,7 @@ export class App implements OnInit {
     this.service.deleteTask(id).subscribe(() => {
       console.log("Task gelöscht");
       this.ladeAlleTask();
+      this.deleteTaskId = null;
     });
   }
 }
