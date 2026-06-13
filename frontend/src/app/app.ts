@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskList } from './components/task-list/task-list';
 import { TaskCreate } from './components/task-create/task-create';
+import { TaskDetail } from './components/task-detail/task-detail';
 
 
 @Component({
@@ -27,7 +28,8 @@ import { TaskCreate } from './components/task-create/task-create';
     MatIconModule,
     MatDialogModule,
     TaskList,
-    TaskCreate],
+    TaskCreate,
+    TaskDetail],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -44,15 +46,6 @@ export class App {
   taskList!: TaskList;
 
   constructor(private service: TaskService, private dialog: MatDialog) { }
-
-  public ladeTask(id: number | null): void {
-    if (id === null) return;
-
-    this.service.getTask(id).subscribe((data: Task) => {
-      this.taskAusgabe.set(data);
-      this.taskId = null;
-    });
-  }
 
   public onTaskCreated(): void {
     this.taskList.ladeAlleTask();

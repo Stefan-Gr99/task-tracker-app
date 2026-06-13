@@ -2,23 +2,6 @@
 
 <app-task-create (taskCreated)="onTaskCreated()"></app-task-create>
 
-<mat-card>
-
-    <h2>Task anzeigen</h2>
-
-    <mat-form-field>
-        <mat-label>TaskID</mat-label>
-        <input matInput [(ngModel)]="taskId" required type="number">
-    </mat-form-field>
-
-
-    <button mat-raised-button color="primary" type="button" (click)="ladeTask(taskId)" [disabled]="taskId === null">
-        Task laden
-    </button>
-
-    <p *ngIf="taskAusgabe()">
-        {{ taskAusgabe()?.title }} - {{ taskAusgabe()?.status }}
-    </p>
-</mat-card>
+<app-task-detail></app-task-detail>
 
 <app-task-list></app-task-list>
