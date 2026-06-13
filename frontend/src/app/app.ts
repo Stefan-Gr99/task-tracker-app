@@ -4,7 +4,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterOutlet } from '@angular/router';
 import { TaskService } from './task.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,12 +11,12 @@ import { Task } from "./task";
 import { OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DeleteDialog } from './delete-dialog'
+import { TaskList } from './components/task-list/task-list';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
+  imports: [
     CommonModule,
     FormsModule,
     MatButtonModule,
@@ -27,7 +26,7 @@ import { DeleteDialog } from './delete-dialog'
     MatFormFieldModule,
     MatIconModule,
     MatDialogModule,
-    DeleteDialog],
+    TaskList],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -80,25 +79,6 @@ export class App implements OnInit {
       console.log("Task erstellt");
       this.ladeAlleTask();
       this.newTitle = "";
-    });
-  }
-
-  public deleteTask(task: Task | null): void {
-    if (task === null) return;
-
-    const dialogRef = this.dialog.open(DeleteDialog, {
-      data: task,
-      width: '600px',
-      maxWidth: '90vw',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.service.deleteTask(task.id).subscribe(() => {
-          console.log("Task gelöscht");
-          this.ladeAlleTask();
-        });
-      }
     });
   }
 }
