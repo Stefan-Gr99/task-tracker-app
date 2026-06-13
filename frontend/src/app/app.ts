@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,10 +8,10 @@ import { TaskService } from './task.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task } from "./task";
-import { OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TaskList } from './components/task-list/task-list';
+import { TaskCreate } from './components/task-create/task-create';
 
 
 @Component({
@@ -26,33 +26,24 @@ import { TaskList } from './components/task-list/task-list';
     MatFormFieldModule,
     MatIconModule,
     MatDialogModule,
-    TaskList],
+    TaskList,
+    TaskCreate],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App {
   protected readonly title = signal('frontend');
 
   tasks = signal<Task[]>([]);
   taskId: number | null = null;
   deleteTaskId: number | null = null;
-  newTitle: string = "";
-  newStatus: string = "NICHT_ANGEFANGEN";
 
   taskAusgabe = signal<Task | null>(null);
 
+  @ViewChild(TaskList)
+  taskList!: TaskList;
+
   constructor(private service: TaskService, private dialog: MatDialog) { }
-
-  ngOnInit(): void {
-    this.ladeAlleTask();
-    this.ladeHallo();
-  }
-
-  public ladeHallo(): void {
-    this.service.getHallo().subscribe((data: string) => {
-      console.log(data);
-    });
-  }
 
   public ladeTask(id: number | null): void {
     if (id === null) return;
@@ -63,22 +54,7 @@ export class App implements OnInit {
     });
   }
 
-  public ladeAlleTask(): void {
-    this.service.getTasks().subscribe((data: Task[]) => {
-      this.tasks.set(data);
-    });
-  }
-
-  public addTask(): void {
-    const task: Partial<Task> = {
-      title: this.newTitle,
-      status: this.newStatus
-    };
-
-    this.service.postTask(task).subscribe(() => {
-      console.log("Task erstellt");
-      this.ladeAlleTask();
-      this.newTitle = "";
-    });
+  public onTaskCreated(): void {
+    this.taskList.ladeAlleTask();
   }
 }
