@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteDialog } from '../../delete-dialog';
+import { DeleteDialog } from '../delete-dialog/delete-dialog';
 
 import { TaskService } from '../../task.service';
 import { Task } from '../../task';
@@ -44,8 +44,9 @@ export class TaskList implements OnInit {
 
     const dialogRef = this.dialog.open(DeleteDialog, {
       data: task,
-      width: '600px',
+      width: '500px',
       maxWidth: '90vw',
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {

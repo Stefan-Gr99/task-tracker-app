@@ -1,0 +1,17 @@
+<h2 class="dialog-title">Task löschen?</h2>
+
+<p class="dialog-text">
+  Möchtest du
+  <span class="task-name">"{{ data.title }}"</span>
+  wirklich löschen?
+</p>
+
+<div class="dialog-actions">
+  <button mat-button (click)="close(false)">
+    Abbrechen
+  </button>
+
+  <button mat-raised-button class="delete-confirm" color="warn" (click)="close(true)">
+    Löschen
+  </button>
+</div>
