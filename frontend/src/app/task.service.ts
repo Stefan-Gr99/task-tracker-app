@@ -30,4 +30,8 @@ export class TaskService {
     public deleteTask(id: number): Observable<void> {
         return this.http.delete<void>(`http://localhost:8080/api/tasks/${id}`);
     }
+
+    public patchTask(id: number, task: Partial<Task>): Observable<Task> {
+        return this.http.patch<Task>(`http://localhost:8080/api/tasks/${id}`, task);
+    }
 }
