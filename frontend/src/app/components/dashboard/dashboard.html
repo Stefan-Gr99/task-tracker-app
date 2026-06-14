@@ -1,0 +1,43 @@
+<mat-card class="dashboard-card">
+    <h2>Dashboard</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-box stat-all">
+            <span class="stat-label">Alle Tasks</span>
+            <span class="stat-value">{{ service.tasks().length }}</span>
+        </div>
+
+        <div class="stat-box stat-not-started">
+            <span class="stat-label">Nicht angefangen</span>
+            <span class="stat-value">
+                {{ countByStatus('NICHT_ANGEFANGEN') }}
+            </span>
+        </div>
+
+        <div class="stat-box stat-working">
+            <span class="stat-label">In Arbeit</span>
+            <span class="stat-value">
+                {{ countByStatus('IN_ARBEIT') }}
+            </span>
+        </div>
+
+        <div class="stat-box stat-done">
+            <span class="stat-label">Fertig</span>
+            <span class="stat-value">
+                {{ countByStatus('FERTIG') }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="progress-box">
+        <span class="progress-text">
+            {{ countByStatus('FERTIG') }}
+            von
+            {{ service.tasks().length }}
+            erledigt
+        </span>
+    </div>
+
+</mat-card>

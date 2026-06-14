@@ -1,0 +1,65 @@
+.dashboard-card {
+    margin: 30px;
+    padding: 20px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-box {
+    background-color: #f7f7f7;
+    border-radius: 14px;
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #192546;
+}
+
+.stat-all {
+    border-left: 6px solid #192546;
+}
+
+.stat-not-started {
+    border-left: 6px solid gray;
+}
+
+.stat-working {
+    border-left: 6px solid orange;
+}
+
+.stat-done {
+    border-left: 6px solid green;
+}
+
+.progress-box {
+    margin-top: 20px;
+    padding: 15px;
+
+    background-color: #f7f7f7;
+    border-radius: 12px;
+}
+
+.progress-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #192546;
+}

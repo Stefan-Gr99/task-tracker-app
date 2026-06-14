@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Task } from './task';
@@ -10,6 +10,14 @@ import { Task } from './task';
 
 export class TaskService {
     constructor(private http: HttpClient) { }
+
+    tasks = signal<Task[]>([]);
+
+    public loadTasks(): void {
+        this.getTasks().subscribe((data: Task[]) => {
+            this.tasks.set(data);
+        });
+    }
 
     public getHallo(): Observable<string> {
         return this.http.get("http://localhost:8080/api/hallo", { responseType: 'text' });
