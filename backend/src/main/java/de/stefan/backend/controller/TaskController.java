@@ -49,16 +49,21 @@ public class TaskController {
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task changedTask) {
         Task task = taskRepository.findById(id).orElse(null);
 
-        if (task != null) {
-            task.setTitle(changedTask.getTitle());
-            task.setStatus(changedTask.getStatus());
-
-            taskRepository.save(task);
-
-            return ResponseEntity.ok().body(task);
-        } else {
+        if (task == null) {
             return ResponseEntity.notFound().build();
         }
+
+        if (changedTask.getTitle() != null) {
+            task.setTitle(changedTask.getTitle());
+        }
+
+        if (changedTask.getStatus() != null) {
+            task.setStatus(changedTask.getStatus());
+        }
+
+        Task savedTask = taskRepository.save(task);
+
+        return ResponseEntity.ok().body(savedTask);
     }
 
     @DeleteMapping("/api/tasks/{id}")

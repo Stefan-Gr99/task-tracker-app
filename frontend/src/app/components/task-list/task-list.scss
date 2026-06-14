@@ -65,8 +65,12 @@ button.delete {
     border-radius: 12px;
     background-color: #ddd;
     font-size: 12px;
-    margin-left: 10px;
+    margin-left: auto;
     width: 100px;
+}
+
+.status-dropdown {
+    width: 250px;
 }
 
 .status-IN_ARBEIT {

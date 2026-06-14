@@ -16,9 +16,19 @@
                 <span class="task-title">{{ task.title }}</span>
             </div>
 
-            <span class="task-status" [ngClass]="'status-' + task.status">
-                {{ task.status }}
-            </span>
+            <mat-select class="status-dropdown" [ngModel]="task.status" (ngModelChange)="updateStatus(task, $event)">
+
+                <mat-select-trigger>
+                    <span class="task-status" [ngClass]="'status-' + task.status">
+                        {{ task.status }}
+                    </span>
+                </mat-select-trigger>
+
+                <mat-option value="NICHT_ANGEFANGEN">Nicht angefangen</mat-option>
+                <mat-option value="IN_ARBEIT">In Arbeit</mat-option>
+                <mat-option value="FERTIG">Fertig</mat-option>
+
+            </mat-select>
 
             <button mat-icon-button color="primary">
                 <mat-icon>edit</mat-icon>

@@ -16,7 +16,7 @@
         </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" [disabled]="!newTitle" (click)="addTask()">
+    <button mat-raised-button color="primary" [disabled]="!newTitle.trim()" (click)="addTask()">
         Task erstellen
     </button>
 

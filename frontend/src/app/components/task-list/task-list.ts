@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialog } from '../delete-dialog/delete-dialog';
+import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TaskService } from '../../task.service';
 import { Task } from '../../task';
@@ -13,9 +15,11 @@ import { Task } from '../../task';
   selector: 'app-task-list',
   imports: [
     CommonModule,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatSelectModule
   ],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
@@ -56,6 +60,16 @@ export class TaskList implements OnInit {
           this.ladeAlleTask();
         });
       }
+    });
+  }
+
+  public updateStatus(task: Task, newStatus: string): void {
+    const changedTask: Partial<Task> = {
+      status: newStatus
+    }
+
+    this.service.patchTask(task.id, changedTask).subscribe(() => {
+      this.ladeAlleTask();
     });
   }
 }
