@@ -1,5 +1,6 @@
 package de.stefan.backend.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.stefan.backend.model.Task;
+import de.stefan.backend.model.TaskStatus;
 import de.stefan.backend.repository.TaskRepository;
 
 // TODO:
@@ -59,6 +61,17 @@ public class TaskController {
 
         if (changedTask.getStatus() != null) {
             task.setStatus(changedTask.getStatus());
+
+            if (changedTask.getStatus() == TaskStatus.FERTIG) {
+                task.setCompletedAt(LocalDate.now());
+            } else {
+                task.setCompletedAt(null);
+            }
+
+        }
+
+        if (changedTask.getDescription() != null) {
+            task.setDescription(changedTask.getDescription());
         }
 
         Task savedTask = taskRepository.save(task);

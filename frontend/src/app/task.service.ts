@@ -16,6 +16,7 @@ export class TaskService {
     public loadTasks(): void {
         this.getTasks().subscribe((data: Task[]) => {
             this.tasks.set(data);
+            console.log(data);
         });
     }
 

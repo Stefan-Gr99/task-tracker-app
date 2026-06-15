@@ -18,4 +18,13 @@ export class Dashboard {
     return this.service.tasks().filter(task => task.status === status).length;
   }
 
+  private isInCurrentWeek(dateString: string): boolean {
+    const today = new Date();
+    const day = today.getDay();
+
+    //TODO: Funktion beenden
+
+    return false;
+  }
+
 }
