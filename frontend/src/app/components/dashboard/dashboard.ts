@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { TaskService } from '../../task.service';
 import { MatCardModule } from '@angular/material/card';
-import { C } from '@angular/cdk/keycodes';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',

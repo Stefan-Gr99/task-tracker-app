@@ -1,53 +1,70 @@
 <mat-card class="dashboard-card">
-    <h2>Dashboard</h2>
 
-    <div class="stats-grid">
-
-        <div class="stat-box stat-all">
-            <span class="stat-label">Alle Tasks</span>
-            <span class="stat-value">{{ service.tasks().length }}</span>
-        </div>
-
-        <div class="stat-box stat-not-started">
-            <span class="stat-label">Nicht angefangen</span>
-            <span class="stat-value">
-                {{ countByStatus('NICHT_ANGEFANGEN') }}
-            </span>
-        </div>
-
-        <div class="stat-box stat-working">
-            <span class="stat-label">In Arbeit</span>
-            <span class="stat-value">
-                {{ countByStatus('IN_ARBEIT') }}
-            </span>
-        </div>
-
-        <div class="stat-box stat-done">
-            <span class="stat-label">Fertig</span>
-            <span class="stat-value">
-                {{ countByStatus('FERTIG') }}
-            </span>
-        </div>
-
-        <div class="stat-box stat-created-week">
-            <span class="stat-label">Diese Woche erstellt</span>
-            <span class="stat-value">{{ createdThisWeek() }}</span>
-        </div>
-
-        <div class="stat-box stat-completed-week">
-            <span class="stat-label">Diese Woche erledigt</span>
-            <span class="stat-value">{{ completedThisWeek() }}</span>
-        </div>
-
+    <div class="dashboard-header">
+        <h2>Dashboard</h2>
+        <span class="dashboard-subtitle">
+            Deine Aufgaben im Überblick
+        </span>
     </div>
 
-    <div class="progress-box">
-        <span class="progress-text">
-            {{ countByStatus('FERTIG') }}
-            von
-            {{ service.tasks().length }}
-            erledigt
-        </span>
+    <div class="dashboard-layout">
+
+        <div class="left-column">
+
+            <div class="status-row">
+
+                <div class="mini-card stat-all">
+                    <mat-icon>list_alt</mat-icon>
+                    <span>Alle</span>
+                    <strong>{{ service.tasks().length }}</strong>
+                </div>
+
+                <div class="mini-card stat-not-started">
+                    <mat-icon>schedule</mat-icon>
+                    <span>Offen</span>
+                    <strong>{{ countByStatus('NICHT_ANGEFANGEN') }}</strong>
+                </div>
+
+                <div class="mini-card stat-working">
+                    <mat-icon>construction</mat-icon>
+                    <span>Arbeit</span>
+                    <strong>{{ countByStatus('IN_ARBEIT') }}</strong>
+                </div>
+
+                <div class="mini-card stat-done">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Fertig</span>
+                    <strong>{{ countByStatus('FERTIG') }}</strong>
+                </div>
+
+            </div>
+
+            <div class="info-card stat-created-week">
+                <mat-icon>add_task</mat-icon>
+                <span class="card-label">Diese Woche erstellt</span>
+                <span class="card-value">{{ createdThisWeek() }}</span>
+            </div>
+
+            <div class="info-card stat-completed-week">
+                <mat-icon>task_alt</mat-icon>
+                <span class="card-label">Diese Woche erledigt</span>
+                <span class="card-value">{{ completedThisWeek() }}</span>
+            </div>
+
+        </div>
+
+        <div class="progress-card">
+            <span class="card-label">Fortschritt</span>
+
+            <span class="progress-number">
+                {{ countByStatus('FERTIG') }} von {{ service.tasks().length }}
+            </span>
+
+            <span class="progress-subtitle">
+                Tasks erledigt
+            </span>
+        </div>
+
     </div>
 
 </mat-card>
