@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TaskService } from '../../task.service';
 import { MatCardModule } from '@angular/material/card';
+import { C } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,5 +49,31 @@ export class Dashboard {
     }
 
     return false;
+  }
+
+  public createdThisWeek(): number {
+    let count = 0;
+
+    this.service.tasks().forEach(task => {
+      if (this.isInCurrentWeek(task.createdAt)) {
+        count++;
+      }
+    }
+    );
+
+    return count;
+  }
+
+  public completedThisWeek(): number {
+    let count = 0;
+
+    this.service.tasks().forEach(task => {
+      if (task.completedAt != null) {
+        if (this.isInCurrentWeek(task.completedAt)) {
+          count++;
+        }
+      }
+    })
+    return count;
   }
 }

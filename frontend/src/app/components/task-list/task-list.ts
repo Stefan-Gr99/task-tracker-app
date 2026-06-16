@@ -38,6 +38,7 @@ export class TaskList implements OnInit {
 
   public ladeAlleTask(): void {
     this.service.loadTasks();
+    console.log()
   }
 
   public deleteTask(task: Task | null): void {
@@ -53,7 +54,6 @@ export class TaskList implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.service.deleteTask(task.id).subscribe(() => {
-          console.log("Task gelöscht");
           this.ladeAlleTask();
         });
       }
