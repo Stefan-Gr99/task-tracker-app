@@ -1,1 +1,43 @@
-<p>edit-dialog works!</p>
+
+<div class="edit-dialog">
+  <h2 mat-dialog-title>Aufgabe bearbeiten</h2>
+
+  <mat-dialog-content class="edit-content">
+    <p class="dialog-subtitle">
+      Aktualisiere die Details deiner Aufgabe.
+    </p>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Titel</mat-label>
+      <input
+        matInput
+        [(ngModel)]="title"
+        maxlength="100"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Beschreibung</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="description"
+        rows="3"
+      ></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="edit-actions">
+    <button mat-button (click)="cancel()">
+      Abbrechen
+    </button>
+
+    <button
+      mat-flat-button
+      (click)="save()"
+      [disabled]="!title.trim()"
+    >
+      Speichern
+    </button>
+  </mat-dialog-actions>
+</div>

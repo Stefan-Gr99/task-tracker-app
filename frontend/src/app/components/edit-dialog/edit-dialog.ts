@@ -7,6 +7,7 @@ import { Task } from "../../task";
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -14,7 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     FormsModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule
   ],
   templateUrl: './edit-dialog.html',
   styleUrl: './edit-dialog.scss',
@@ -28,11 +30,22 @@ export class EditDialog {
     @Inject(MAT_DIALOG_DATA) public data: Task
   ) {
     this.title = data.title;
-    this.description = data.description;
+    this.description = data.description ?? '';
   }
 
-  close(result: boolean) {
-    this.dialogRef.close(result);
+  save(): void {
+    const title = this.title.trim();
+
+    if(!title) return;
+
+    this.dialogRef.close({
+      title: title,
+      description: this.description.trim()
+    });
+  }
+
+  cancel(): void {
+    this.dialogRef.close();
   }
 
 }

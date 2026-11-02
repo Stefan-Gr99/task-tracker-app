@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { TaskService } from '../../task.service';
 import { Task } from '../../task';
+import { EditDialog } from '../edit-dialog/edit-dialog';
 
 @Component({
   selector: 'app-task-list',
@@ -69,4 +70,30 @@ export class TaskList implements OnInit {
       this.ladeAlleTask();
     });
   }
+
+  public editTask(task: Task | null): void {
+  if (task === null) return;
+
+  const dialogRef = this.dialog.open(EditDialog, {
+    data: { ...task },
+    width: '520px',
+    maxWidth: '90vw',
+    autoFocus: false
+  });
+
+  dialogRef.afterClosed().subscribe(
+    (changes: Partial<Task> | undefined) => {
+      if (!changes) return;
+
+      this.service.patchTask(task.id, changes).subscribe({
+        next: () => this.ladeAlleTask(),
+        error: (err) => {
+          console.error(
+            'Aufgabe konnte nicht gespeichert werden:', err
+          );
+        }
+      });
+    }
+  );
+}
 }
