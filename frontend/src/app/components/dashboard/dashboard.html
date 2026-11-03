@@ -1,70 +1,110 @@
+
 <mat-card class="dashboard-card">
-
-    <div class="dashboard-header">
-        <h2>Dashboard</h2>
-        <span class="dashboard-subtitle">
-            Deine Aufgaben im Überblick
-        </span>
+  <div class="dashboard-header">
+    <div>
+      <h2>Dashboard</h2>
+      <span class="dashboard-subtitle">Deine Aufgaben im Überblick</span>
     </div>
 
-    <div class="dashboard-layout">
+    <div class="rate-chip">
+      <mat-icon>trending_up</mat-icon>
+      {{ completionRate() }}% erledigt
+    </div>
+  </div>
 
-        <div class="left-column">
-
-            <div class="status-row">
-
-                <div class="mini-card stat-all">
-                    <mat-icon>list_alt</mat-icon>
-                    <span>Alle</span>
-                    <strong>{{ service.tasks().length }}</strong>
-                </div>
-
-                <div class="mini-card stat-not-started">
-                    <mat-icon>schedule</mat-icon>
-                    <span>Offen</span>
-                    <strong>{{ countByStatus('NICHT_ANGEFANGEN') }}</strong>
-                </div>
-
-                <div class="mini-card stat-working">
-                    <mat-icon>construction</mat-icon>
-                    <span>Arbeit</span>
-                    <strong>{{ countByStatus('IN_ARBEIT') }}</strong>
-                </div>
-
-                <div class="mini-card stat-done">
-                    <mat-icon>check_circle</mat-icon>
-                    <span>Fertig</span>
-                    <strong>{{ countByStatus('FERTIG') }}</strong>
-                </div>
-
-            </div>
-
-            <div class="info-card stat-created-week">
-                <mat-icon>add_task</mat-icon>
-                <span class="card-label">Diese Woche erstellt</span>
-                <span class="card-value">{{ createdThisWeek() }}</span>
-            </div>
-
-            <div class="info-card stat-completed-week">
-                <mat-icon>task_alt</mat-icon>
-                <span class="card-label">Diese Woche erledigt</span>
-                <span class="card-value">{{ completedThisWeek() }}</span>
-            </div>
-
-        </div>
-
-        <div class="progress-card">
-            <span class="card-label">Fortschritt</span>
-
-            <span class="progress-number">
-                {{ countByStatus('FERTIG') }} von {{ service.tasks().length }}
-            </span>
-
-            <span class="progress-subtitle">
-                Tasks erledigt
-            </span>
-        </div>
-
+  <!-- Aufgabenstatus -->
+  <div class="status-row">
+    <div class="mini-card stat-all">
+      <mat-icon>list_alt</mat-icon>
+      <strong>{{ service.tasks().length }}</strong>
+      <span>Alle</span>
     </div>
 
+    <div class="mini-card stat-not-started">
+      <mat-icon>schedule</mat-icon>
+      <strong>{{ countByStatus('NICHT_ANGEFANGEN') }}</strong>
+      <span>Offen</span>
+    </div>
+
+    <div class="mini-card stat-working">
+      <mat-icon>construction</mat-icon>
+      <strong>{{ countByStatus('IN_ARBEIT') }}</strong>
+      <span>In Arbeit</span>
+    </div>
+
+    <div class="mini-card stat-done">
+      <mat-icon>check_circle</mat-icon>
+      <strong>{{ countByStatus('FERTIG') }}</strong>
+      <span>Fertig</span>
+    </div>
+  </div>
+
+  <div class="dashboard-layout">
+
+    <!-- Verteilung der Aufgaben -->
+    <div class="panel donut-panel">
+      <span class="card-label">Status-Verteilung</span>
+
+      <div class="donut-wrap">
+        <div class="donut" [style.background]="donutGradient()">
+          <div class="donut-hole">
+            <strong>{{ completionRate() }}%</strong>
+            <span>{{ countByStatus('FERTIG') }} von {{ service.tasks().length }}</span>
+          </div>
+        </div>
+
+        <ul class="legend">
+          <li>
+            <i class="dot open"></i>
+            Offen <b>{{ countByStatus('NICHT_ANGEFANGEN') }}</b>
+          </li>
+          <li>
+            <i class="dot work"></i>
+            In Arbeit <b>{{ countByStatus('IN_ARBEIT') }}</b>
+          </li>
+          <li>
+            <i class="dot done"></i>
+            Fertig <b>{{ countByStatus('FERTIG') }}</b>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Erledigte Aufgaben der letzten 7 Tage -->
+    <div class="panel chart-panel">
+      <span class="card-label">Erledigt in den letzten 7 Tagen</span>
+
+      <div class="bars">
+        <div class="bar-col" *ngFor="let day of last7Days()">
+          <span class="bar-value">{{ day.count }}</span>
+
+          <div class="bar-track">
+            <div class="bar" [style.height.%]="day.height"></div>
+          </div>
+
+          <span class="bar-label">{{ day.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wochenübersicht -->
+    <div class="week-column">
+      <div class="info-card stat-created-week">
+        <mat-icon>add_task</mat-icon>
+        <div>
+          <span class="card-label">Diese Woche erstellt</span>
+          <span class="card-value">{{ createdThisWeek() }}</span>
+        </div>
+      </div>
+
+      <div class="info-card stat-completed-week">
+        <mat-icon>task_alt</mat-icon>
+        <div>
+          <span class="card-label">Diese Woche erledigt</span>
+          <span class="card-value">{{ completedThisWeek() }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </mat-card>
