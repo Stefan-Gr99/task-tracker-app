@@ -96,4 +96,18 @@ export class TaskList implements OnInit {
     }
   );
 }
+
+statusLabel(status: string): string {
+  switch (status) {
+    case 'NICHT_ANGEFANGEN':
+      return 'Nicht angefangen';
+    case 'IN_ARBEIT':
+      return 'In Arbeit';
+    case 'FERTIG':
+      return 'Fertig';
+    default:
+      return status;
+  }
+}
+
 }

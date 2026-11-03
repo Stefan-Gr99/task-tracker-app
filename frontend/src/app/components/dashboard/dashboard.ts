@@ -2,12 +2,14 @@ import { Component, computed } from '@angular/core';
 import { TaskService } from '../../task.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    NgFor
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
