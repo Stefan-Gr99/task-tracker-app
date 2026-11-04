@@ -33,51 +33,84 @@ public class TaskController {
     }
 
     @GetMapping("/api/tasks/{id}")
-    public Task getTask(@PathVariable Long id) {
-        return taskRepository.findById(id).orElse(null);
-    }
-
-    @PostMapping("/api/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody Task savedTask) {
-
-        if (savedTask.getStatus() == TaskStatus.FERTIG) {
-            savedTask.setCompletedAt(LocalDate.now());
-        } else {
-            savedTask.setCompletedAt(null);
-        }
-
-        Task task = taskRepository.save(savedTask);
-
-        return ResponseEntity.status(201).body(task);
-    }
-
-    @PatchMapping("/api/tasks/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task changedTask) {
+    public ResponseEntity<Task> getTask(@PathVariable Long id) {
         Task task = taskRepository.findById(id).orElse(null);
 
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
 
+        return ResponseEntity.ok(task);
+    }
+
+    
+@PostMapping("/api/tasks")
+public ResponseEntity<Task> createTask(@RequestBody Task newTask) {
+
+    if (isInvalidTitle(newTask.getTitle())
+            || newTask.getStatus() == null
+            || isInvalidDescription(newTask.getDescription())) {
+        return ResponseEntity.badRequest().build();
+    }
+
+    Task task = new Task(
+            newTask.getTitle().trim(),
+            newTask.getStatus()
+    );
+
+    if (newTask.getDescription() != null) {
+        task.setDescription(newTask.getDescription());
+    }
+
+    if (task.getStatus() == TaskStatus.FERTIG) {
+        task.setCompletedAt(LocalDate.now());
+    }
+
+    Task savedTask = taskRepository.save(task);
+
+    return ResponseEntity.status(201).body(savedTask);
+}
+
+
+    @PatchMapping("/api/tasks/{id}")
+    public ResponseEntity<Task> updateTask(
+            @PathVariable Long id,
+            @RequestBody Task changedTask) {
+
+        Task task = taskRepository.findById(id).orElse(null);
+
+        if (task == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (changedTask.getTitle() != null
+                && isInvalidTitle(changedTask.getTitle())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (isInvalidDescription(changedTask.getDescription())) {
+            return ResponseEntity.badRequest().build();
+        }
+
         if (changedTask.getTitle() != null) {
-            task.setTitle(changedTask.getTitle());
+            task.setTitle(changedTask.getTitle().trim());
+        }
+
+        if (changedTask.getDescription() != null) {
+            task.setDescription(changedTask.getDescription());
         }
 
         if (changedTask.getStatus() != null) {
-
             TaskStatus newStatus = changedTask.getStatus();
 
-            if (newStatus == TaskStatus.FERTIG && task.getStatus() != TaskStatus.FERTIG) {
+            if (newStatus == TaskStatus.FERTIG
+                    && task.getStatus() != TaskStatus.FERTIG) {
                 task.setCompletedAt(LocalDate.now());
             } else if (newStatus != TaskStatus.FERTIG) {
                 task.setCompletedAt(null);
             }
 
             task.setStatus(newStatus);
-        }
-
-        if (changedTask.getDescription() != null) {
-            task.setDescription(changedTask.getDescription());
         }
 
         Task savedTask = taskRepository.save(task);
@@ -87,11 +120,23 @@ public class TaskController {
 
     @DeleteMapping("/api/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        if (taskRepository.findById(id).isPresent()) {
-            taskRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+
+        if (!taskRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.notFound().build();
+        taskRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    private boolean isInvalidTitle(String title) {
+        return title == null
+                || title.isBlank()
+                || title.trim().length() > 255;
+    }
+
+    private boolean isInvalidDescription(String description) {
+        return description != null && description.length() > 255;
     }
 }
