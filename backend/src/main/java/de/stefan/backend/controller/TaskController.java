@@ -17,10 +17,6 @@ import de.stefan.backend.model.Task;
 import de.stefan.backend.model.TaskStatus;
 import de.stefan.backend.repository.TaskRepository;
 
-// TODO:
-// - 404 Handling vereinheitlichen
-// - Service Layer einführen
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class TaskController {
@@ -38,12 +34,20 @@ public class TaskController {
 
     @GetMapping("/api/tasks/{id}")
     public Task getTask(@PathVariable Long id) {
-        return taskRepository.findById(id).orElse(null); // TODO: später auf ResponseEntity mit 404 umstellen
+        return taskRepository.findById(id).orElse(null);
     }
 
     @PostMapping("/api/tasks")
     public ResponseEntity<Task> createTask(@RequestBody Task savedTask) {
+
+        if (savedTask.getStatus() == TaskStatus.FERTIG) {
+            savedTask.setCompletedAt(LocalDate.now());
+        } else {
+            savedTask.setCompletedAt(null);
+        }
+
         Task task = taskRepository.save(savedTask);
+
         return ResponseEntity.status(201).body(task);
     }
 
@@ -60,14 +64,16 @@ public class TaskController {
         }
 
         if (changedTask.getStatus() != null) {
-            task.setStatus(changedTask.getStatus());
 
-            if (changedTask.getStatus() == TaskStatus.FERTIG) {
+            TaskStatus newStatus = changedTask.getStatus();
+
+            if (newStatus == TaskStatus.FERTIG && task.getStatus() != TaskStatus.FERTIG) {
                 task.setCompletedAt(LocalDate.now());
-            } else {
+            } else if (newStatus != TaskStatus.FERTIG) {
                 task.setCompletedAt(null);
             }
 
+            task.setStatus(newStatus);
         }
 
         if (changedTask.getDescription() != null) {
@@ -76,17 +82,16 @@ public class TaskController {
 
         Task savedTask = taskRepository.save(task);
 
-        return ResponseEntity.ok().body(savedTask);
+        return ResponseEntity.ok(savedTask);
     }
 
     @DeleteMapping("/api/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         if (taskRepository.findById(id).isPresent()) {
             taskRepository.deleteById(id);
-
-            return ResponseEntity.status(204).build();
-        } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
+
+        return ResponseEntity.notFound().build();
     }
 }
