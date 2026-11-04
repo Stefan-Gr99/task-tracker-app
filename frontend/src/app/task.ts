@@ -7,5 +7,3 @@ export interface Task {
     updatedAt: string | null;
     completedAt: string | null;
 }
-
-//Interface zum erstellen von Tasks erstellen und einbinden
