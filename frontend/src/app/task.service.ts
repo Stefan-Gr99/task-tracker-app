@@ -16,12 +16,7 @@ export class TaskService {
     public loadTasks(): void {
         this.getTasks().subscribe((data: Task[]) => {
             this.tasks.set(data);
-            console.log(data);
         });
-    }
-
-    public getHallo(): Observable<string> {
-        return this.http.get("http://localhost:8080/api/hallo", { responseType: 'text' });
     }
 
     public postTask(task: Partial<Task>): Observable<Task> {

@@ -24,7 +24,7 @@ Eine Fullstack-Webanwendung zur Verwaltung von Aufgaben mit Dashboard und statis
 
 **Voraussetzungen:** JDK 21, Docker mit Docker Compose, npm und eine mit Angular 21 kompatible Node.js-Version (z. B. Node.js 22.12 oder neuer aus der 22er-Reihe).
 
-Die folgenden Befehle sind für **PowerShell unter Windows** gedacht. Alle drei Terminals werden im Hauptverzeichnis des Projekts geöffnet.
+Die folgenden Befehle sind für PowerShell unter Windows gedacht. Alle drei Terminals werden im Hauptverzeichnis des Projekts geöffnet.
 
 ### 1. Datenbank starten
 
@@ -96,8 +96,6 @@ Alle Backend-Tests ausführen:
 ```powershell
 .\mvnw.cmd test
 ```
-
-Der vollständige Spring-Kontexttest benötigt eine erreichbare PostgreSQL-Datenbank.
 
 ## Projektstruktur
 

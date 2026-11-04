@@ -7,13 +7,13 @@
     </button>
   </div>
 
-  <div class="empty-state" *ngIf="service.tasks().length === 0">
+  <div class="empty-state" *ngIf="sortedTasks().length === 0">
     <mat-icon>inbox</mat-icon>
     <p>Keine Aufgaben vorhanden</p>
   </div>
 
   <ul class="task-list">
-    <li *ngFor="let task of service.tasks()" class="task-item"
+    <li *ngFor="let task of sortedTasks()" class="task-item"
         [ngClass]="'border-' + task.status">
 
       <div class="task-left">

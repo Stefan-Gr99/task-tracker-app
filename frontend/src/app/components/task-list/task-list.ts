@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -36,10 +36,20 @@ export class TaskList implements OnInit {
     this.ladeAlleTask();
   }
 
+  readonly sortedTasks = computed(() => {
+    const statusOrder: Record<string, number> = {
+      IN_ARBEIT: 0,
+      NICHT_ANGEFANGEN: 1,
+      FERTIG: 2
+    };
+
+    return [...this.service.tasks()].sort((a, b) => {
+      return statusOrder[a.status] - statusOrder[b.status];
+    });
+  });
 
   public ladeAlleTask(): void {
     this.service.loadTasks();
-    console.log()
   }
 
   public deleteTask(task: Task | null): void {
@@ -64,7 +74,7 @@ export class TaskList implements OnInit {
   public updateStatus(task: Task, newStatus: string): void {
     const changedTask: Partial<Task> = {
       status: newStatus
-    }
+    };
 
     this.service.patchTask(task.id, changedTask).subscribe(() => {
       this.ladeAlleTask();
@@ -72,42 +82,41 @@ export class TaskList implements OnInit {
   }
 
   public editTask(task: Task | null): void {
-  if (task === null) return;
+    if (task === null) return;
 
-  const dialogRef = this.dialog.open(EditDialog, {
-    data: { ...task },
-    width: '520px',
-    maxWidth: '90vw',
-    autoFocus: false
-  });
+    const dialogRef = this.dialog.open(EditDialog, {
+      data: { ...task },
+      width: '520px',
+      maxWidth: '90vw',
+      autoFocus: false
+    });
 
-  dialogRef.afterClosed().subscribe(
-    (changes: Partial<Task> | undefined) => {
-      if (!changes) return;
+    dialogRef.afterClosed().subscribe(
+      (changes: Partial<Task> | undefined) => {
+        if (!changes) return;
 
-      this.service.patchTask(task.id, changes).subscribe({
-        next: () => this.ladeAlleTask(),
-        error: (err) => {
-          console.error(
-            'Aufgabe konnte nicht gespeichert werden:', err
-          );
-        }
-      });
-    }
-  );
-}
-
-statusLabel(status: string): string {
-  switch (status) {
-    case 'NICHT_ANGEFANGEN':
-      return 'Nicht angefangen';
-    case 'IN_ARBEIT':
-      return 'In Arbeit';
-    case 'FERTIG':
-      return 'Fertig';
-    default:
-      return status;
+        this.service.patchTask(task.id, changes).subscribe({
+          next: () => this.ladeAlleTask(),
+          error: (err) => {
+            console.error(
+              'Aufgabe konnte nicht gespeichert werden:', err
+            );
+          }
+        });
+      }
+    );
   }
-}
 
+  statusLabel(status: string): string {
+    switch (status) {
+      case 'NICHT_ANGEFANGEN':
+        return 'Nicht angefangen';
+      case 'IN_ARBEIT':
+        return 'In Arbeit';
+      case 'FERTIG':
+        return 'Fertig';
+      default:
+        return status;
+    }
+  }
 }

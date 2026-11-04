@@ -12,7 +12,8 @@
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="grow">
           <mat-label>Titel</mat-label>
           <input matInput [(ngModel)]="newTitle"
-                 (keyup.enter)="newTitle.trim() && addTask()">
+                maxlength="255"
+                (keyup.enter)="newTitle.trim() && addTask()">
         </mat-form-field>
 
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="status-field">
