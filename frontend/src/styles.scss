@@ -1,44 +1,66 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+
 @use '@angular/material' as mat;
 
 html {
-  height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-}
-
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  @include mat.theme((
+    color: (
+      primary: mat.$violet-palette,
+      theme-type: light
+    ),
+    typography: Roboto,
+    density: 0
+  ));
 
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
+  @include mat.theme-overrides((
+    primary: #4f46e5,
+    on-primary: #ffffff
+  ));
+
+  @include mat.card-overrides((
+    elevated-container-color: #ffffff,
+    elevated-container-shape: 16px
+  ));
+
+  --mat-select-panel-background-color: #ffffff;
+  --mat-form-field-outlined-outline-color: #d1d5db;
+  --mat-form-field-outlined-hover-outline-color: #9ca3af;
+  --mat-form-field-outlined-focus-outline-color: #4f46e5;
+
+  --mat-button-filled-container-shape: 10px;
+  --mat-button-filled-disabled-container-color: #e5e7eb;
+  --mat-button-filled-disabled-label-text-color: #9ca3af;
+
+  --open: #f59e0b;
+  --work: #3b82f6;
+  --done: #10b981;
+
+  --text: #1f2937;
+  --gray: #6b7280;
+  --background: #f8fafc;
+  --border: #e5e7eb;
+  --page-bg: #f1f5f9;
+  --radius: 16px;
 }
-html,
+
 body {
   margin: 0;
-  padding: 0;
-  background-color: lightgray;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-mdc-card {
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
 }

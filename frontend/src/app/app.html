@@ -1,9 +1,25 @@
-<h1 class="title">Task Tracker</h1>
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">
+        <mat-icon>task_alt</mat-icon>
+      </div>
 
-<app-dashboard></app-dashboard>
+      <div class="brand-text">
+        <h1>Task Tracker</h1>
+        <span>Aufgaben planen, verfolgen, auswerten</span>
+      </div>
+    </div>
 
-<app-task-create (taskCreated)="onTaskCreated()"></app-task-create>
+    <div class="header-date">
+      <mat-icon>calendar_today</mat-icon>
+      {{ today }}
+    </div>
+  </div>
+</header>
 
-<app-task-detail></app-task-detail>
-
-<app-task-list></app-task-list>
+<main class="page">
+  <app-dashboard></app-dashboard>
+  <app-task-actions (taskCreated)="onTaskCreated()"></app-task-actions>
+  <app-task-list></app-task-list>
+</main>

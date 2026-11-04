@@ -1,315 +1,10 @@
-
 :host {
-  --open: #f59e0b;
-  --work: #3b82f6;
-  --done: #10b981;
-  --text: #1f2937;
-  --gray: #6b7280;
-  --background: #f8fafc;
-  --border: #e5e7eb;
-
   display: block;
 }
 
-mat-card {
-  padding: 24px;
-  margin-bottom: 24px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+.task-card {
+  padding: 20px 24px;
 }
-
-
-// Dashboard
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  h2 {
-    margin: 0;
-    font-size: 1.6rem;
-    color: var(--text);
-  }
-
-  .dashboard-subtitle {
-    color: var(--gray);
-    font-size: 0.9rem;
-  }
-}
-
-.rate-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
-  font-weight: 600;
-
-  mat-icon {
-    font-size: 20px;
-    height: 20px;
-    width: 20px;
-  }
-}
-
-.status-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.mini-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 16px;
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  transition: transform 0.15s, box-shadow 0.15s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-  }
-
-  mat-icon {
-    margin-bottom: 6px;
-  }
-
-  strong {
-    font-size: 1.8rem;
-    line-height: 1;
-    color: var(--text);
-  }
-
-  span {
-    font-size: 0.85rem;
-    color: var(--gray);
-  }
-
-  &.stat-all mat-icon {
-    color: #6366f1;
-  }
-
-  &.stat-not-started mat-icon {
-    color: var(--open);
-  }
-
-  &.stat-working mat-icon {
-    color: var(--work);
-  }
-
-  &.stat-done mat-icon {
-    color: var(--done);
-  }
-}
-
-.dashboard-layout {
-  display: grid;
-  grid-template-columns: 1.1fr 1.4fr 0.9fr;
-  gap: 16px;
-}
-
-.panel {
-  padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: white;
-}
-
-.card-label {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--gray);
-}
-
-
-// Donut-Diagramm
-
-.donut-wrap {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.donut {
-  display: grid;
-  place-items: center;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.donut-hole {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: white;
-
-  strong {
-    font-size: 1.4rem;
-    color: var(--text);
-  }
-
-  span {
-    font-size: 0.7rem;
-    color: var(--gray);
-  }
-}
-
-.legend {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.9rem;
-  color: var(--text);
-
-  li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  b {
-    margin-left: auto;
-    padding-left: 12px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-
-    &.open {
-      background: var(--open);
-    }
-
-    &.work {
-      background: var(--work);
-    }
-
-    &.done {
-      background: var(--done);
-    }
-  }
-}
-
-
-// Balkendiagramm
-
-.bars {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  height: 150px;
-}
-
-.bar-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  gap: 6px;
-  height: 100%;
-}
-
-.bar-track {
-  display: flex;
-  align-items: flex-end;
-  flex: 1;
-  width: 100%;
-  max-width: 28px;
-  background: var(--background);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.bar {
-  width: 100%;
-  min-height: 3px;
-  background: linear-gradient(180deg, #34d399, var(--done));
-  border-radius: 8px;
-  transition: height 0.4s ease;
-}
-
-.bar-value {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.bar-label {
-  font-size: 0.72rem;
-  color: var(--gray);
-}
-
-
-// Wochenübersicht
-
-.week-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.info-card {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  gap: 14px;
-  padding: 16px;
-  border-radius: 14px;
-  color: white;
-
-  mat-icon {
-    font-size: 32px;
-    height: 32px;
-    width: 32px;
-    opacity: 0.9;
-  }
-
-  .card-label {
-    margin: 0 0 2px;
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .card-value {
-    font-size: 1.9rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  &.stat-created-week {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  }
-
-  &.stat-completed-week {
-    background: linear-gradient(135deg, #10b981, #059669);
-  }
-}
-
-// Task-Liste
 
 .task-header {
   display: flex;
@@ -322,6 +17,8 @@ mat-card {
     color: var(--text);
   }
 }
+
+// Task-Liste
 
 .task-list {
   display: flex;
@@ -388,8 +85,11 @@ mat-card {
   }
 }
 
+// Status
+
 .status-dropdown {
-  width: 170px;
+  width: 150px;
+  flex-shrink: 0;
 }
 
 .task-status {
@@ -415,12 +115,22 @@ mat-card {
   }
 }
 
+// Buttons
+
 .task-actions {
   display: flex;
-}
 
-.delete {
-  color: #ef4444;
+  .mat-mdc-icon-button {
+    color: var(--gray);
+
+    &:hover {
+      color: #4f46e5;
+    }
+
+    &.delete:hover {
+      color: #ef4444;
+    }
+  }
 }
 
 .empty-state {
@@ -436,18 +146,7 @@ mat-card {
   }
 }
 
-
-// Responsive
-
 @media (max-width: 1000px) {
-  .dashboard-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .status-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .task-item {
     flex-wrap: wrap;
   }

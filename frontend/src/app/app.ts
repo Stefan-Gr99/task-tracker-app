@@ -1,26 +1,31 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TaskList } from './components/task-list/task-list';
-import { TaskCreate } from './components/task-create/task-create';
-import { TaskDetail } from './components/task-detail/task-detail';
 import { Dashboard } from './components/dashboard/dashboard';
+import { TaskActions } from './components/task-actions/task-actions';
 
 @Component({
   selector: 'app-root',
   imports: [
     TaskList,
-    TaskCreate,
-    TaskDetail,
-    Dashboard
+    TaskActions,
+    Dashboard,
+    MatIconModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('frontend');
 
   @ViewChild(TaskList)
   taskList!: TaskList;
+
+  today = new Date().toLocaleDateString('de-DE', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long'
+  });
 
   public onTaskCreated(): void {
     this.taskList.ladeAlleTask();

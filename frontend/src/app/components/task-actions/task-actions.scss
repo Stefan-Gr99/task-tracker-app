@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.action-card {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 0;
+}
+
+.action-section {
+  padding: 0 20px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+    border-left: 1px solid var(--border);
+  }
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    color: #6366f1;
+  }
+}
+
+
+// Eingabefelder
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  mat-form-field {
+    --mat-form-field-container-height: 44px;
+    --mat-form-field-container-vertical-padding: 10px;
+    --mat-form-field-outlined-container-shape: 10px;
+  }
+
+  .grow {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .status-field {
+    width: 185px;
+    flex-shrink: 0;
+  }
+
+  .id-field {
+    width: 110px;
+    flex-shrink: 0;
+  }
+}
+
+.action-btn {
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+
+  mat-icon {
+    margin-right: 2px;
+  }
+}
+
+// Gefundener Task
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 10px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  .result-title {
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.task-status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.status-NICHT_ANGEFANGEN {
+    background: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+  }
+
+  &.status-IN_ARBEIT {
+    background: rgba(59, 130, 246, 0.15);
+    color: #1d4ed8;
+  }
+
+  &.status-FERTIG {
+    background: rgba(16, 185, 129, 0.15);
+    color: #047857;
+  }
+}
+
+@media (max-width: 1000px) {
+  .action-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .action-section {
+    padding: 0;
+
+    &:last-child {
+      border-left: 0;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+  }
+
+  .form-row {
+    flex-wrap: wrap;
+
+    .status-field {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<mat-card class="action-card">
+  <div class="action-grid">
+
+    <!-- Task erstellen -->
+    <section class="action-section">
+      <div class="section-label">
+        <mat-icon>add_circle</mat-icon>
+        <span>Neuer Task</span>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="grow">
+          <mat-label>Titel</mat-label>
+          <input matInput [(ngModel)]="newTitle"
+                 (keyup.enter)="newTitle.trim() && addTask()">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="status-field">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="newStatus">
+            <mat-option value="NICHT_ANGEFANGEN">Nicht angefangen</mat-option>
+            <mat-option value="IN_ARBEIT">In Arbeit</mat-option>
+            <mat-option value="FERTIG">Fertig</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" class="action-btn"
+                [disabled]="!newTitle.trim()" (click)="addTask()">
+          <mat-icon>add</mat-icon>
+          Erstellen
+        </button>
+      </div>
+    </section>
+
+    <!-- Task suchen -->
+    <section class="action-section">
+      <div class="section-label">
+        <mat-icon>search</mat-icon>
+        <span>Task suchen</span>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="id-field">
+          <mat-label>Task ID</mat-label>
+          <input matInput type="number" [(ngModel)]="taskId"
+                 (keyup.enter)="taskId !== null && ladeTask(taskId)">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" class="action-btn"
+                [disabled]="taskId === null"
+                (click)="taskId !== null && ladeTask(taskId)">
+          Laden
+        </button>
+
+        @if (taskAusgabe(); as task) {
+          <div class="result">
+            <span [class]="'task-status status-' + task.status">
+              {{ statusLabel(task.status) }}
+            </span>
+            <span class="result-title">{{ task.title }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+  </div>
+</mat-card>
