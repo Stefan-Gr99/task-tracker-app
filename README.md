@@ -2,6 +2,10 @@
 
 Eine Fullstack-Webanwendung zur Verwaltung von Aufgaben mit Dashboard und statistischer Übersicht. Das Projekt ist als Lern-Anwendung entstanden, um Angular, Spring Boot und PostgreSQL in einer zusammenhängenden Anwendung einzusetzen.
 
+## Screenshot
+
+![Task Tracker – Dashboard und Aufgabenübersicht](docs/screenshot.png)
+
 ## Funktionen
 
 - Aufgaben erstellen, bearbeiten und löschen
