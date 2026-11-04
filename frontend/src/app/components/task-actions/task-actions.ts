@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -20,10 +21,11 @@ import { Task } from '../../task';
     MatSelectModule,
     MatCardModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    DatePipe
   ],
   templateUrl: './task-actions.html',
-  styleUrl: './task-actions.scss',
+  styleUrl: './task-actions.scss'
 })
 export class TaskActions {
 
@@ -33,8 +35,11 @@ export class TaskActions {
   newTitle: string = "";
   newStatus: string = "NICHT_ANGEFANGEN";
 
-  taskId: number | null = null;
-  taskAusgabe = signal<Task | null>(null);
+  searchText: string = "";
+  searchResults: Task[] = [];
+  searched: boolean = false;
+
+  selectedTaskId: number | null = null;
 
   constructor(private service: TaskService) { }
 
@@ -55,15 +60,26 @@ export class TaskActions {
     });
   }
 
-  public ladeTask(id: number | null): void {
-    if (id === null) {
+  public searchTasks(): void {
+    const text = this.searchText.trim().toLowerCase();
+
+    if (!text) {
+      this.searchResults = [];
+      this.searched = false;
+      this.selectedTaskId = null;
       return;
     }
 
-    this.service.getTask(id).subscribe((data: Task) => {
-      this.taskAusgabe.set(data);
-      this.taskId = null;
-    });
+    this.searchResults = this.service.tasks().filter(task =>
+      task.title.toLowerCase().includes(text)
+    );
+
+    this.selectedTaskId = null;
+    this.searched = true;
+  }
+
+  public toggleDetails(id: number): void {
+    this.selectedTaskId = this.selectedTaskId === id ? null : id;
   }
 
   statusLabel(status: string): string {

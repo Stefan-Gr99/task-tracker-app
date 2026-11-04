@@ -40,27 +40,62 @@
       </div>
 
       <div class="form-row">
-        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="id-field">
-          <mat-label>Task ID</mat-label>
-          <input matInput type="number" [(ngModel)]="taskId"
-                 (keyup.enter)="taskId !== null && ladeTask(taskId)">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="grow">
+          <mat-label>Task-Titel</mat-label>
+          <input matInput
+                 [(ngModel)]="searchText"
+                 (ngModelChange)="searched = false"
+                 (keyup.enter)="searchTasks()">
         </mat-form-field>
 
         <button mat-flat-button color="primary" class="action-btn"
-                [disabled]="taskId === null"
-                (click)="taskId !== null && ladeTask(taskId)">
-          Laden
+                [disabled]="!searchText.trim()"
+                (click)="searchTasks()">
+          <mat-icon>search</mat-icon>
+          Suchen
         </button>
-
-        @if (taskAusgabe(); as task) {
-          <div class="result">
-            <span [class]="'task-status status-' + task.status">
-              {{ statusLabel(task.status) }}
-            </span>
-            <span class="result-title">{{ task.title }}</span>
-          </div>
-        }
       </div>
+
+      @if (searched) {
+        <div class="search-results">
+          @for (task of searchResults; track task.id) {
+            <div class="search-result">
+
+              <div class="result">
+                <span [class]="'task-status status-' + task.status">
+                  {{ statusLabel(task.status) }}
+                </span>
+
+                <span class="result-title">{{ task.title }}</span>
+
+                <button mat-icon-button
+                        (click)="toggleDetails(task.id)"
+                        [attr.aria-label]="'Details zu ' + task.title"
+                        [attr.aria-expanded]="selectedTaskId === task.id">
+                  <mat-icon>
+                    {{ selectedTaskId === task.id ? 'expand_less' : 'info_outline' }}
+                  </mat-icon>
+                </button>
+              </div>
+
+              @if (selectedTaskId === task.id) {
+                <div class="task-details">
+                  <p><strong>ID:</strong> {{ task.id }}</p>
+                  <p><strong>Titel:</strong> {{ task.title }}</p>
+                  <p><strong>Status:</strong> {{ statusLabel(task.status) }}</p>
+                  <p><strong>Beschreibung:</strong> {{ task.description || 'Keine Beschreibung' }}</p>
+                  <p><strong>Erstellt:</strong> {{ task.createdAt ? (task.createdAt | date:'dd.MM.yyyy') : 'Unbekannt' }}</p>
+                  <p><strong>Aktualisiert:</strong> {{ task.updatedAt ? (task.updatedAt | date:'dd.MM.yyyy') : 'Noch nicht aktualisiert' }}</p>
+                  <p><strong>Abgeschlossen:</strong> {{ task.completedAt ? (task.completedAt | date:'dd.MM.yyyy') : 'Noch nicht abgeschlossen' }}</p>
+                </div>
+              }
+
+            </div>
+          } @empty {
+            <p>Keine passenden Tasks gefunden</p>
+          }
+        </div>
+      }
     </section>
 
   </div>
